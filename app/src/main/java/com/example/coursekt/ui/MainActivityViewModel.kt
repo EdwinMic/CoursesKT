@@ -59,19 +59,11 @@ class MainActivityViewModel: ViewModel() {
     fun example3() {
         viewModelScope.launch {
             repository.counter
-                .map{
-                    /*La funcion map transforma los datos que regresa el flow*/
-                    it.toString()
-                }
-                .onEach {
-                    /*La funcion onEach se utiliza para realizar funciones secundarias sin modificar la informacion*/
-                }
                 .catch { error ->
                     /*La funcion catch se utiliza para manejar errores*/
                     _uiState.value = MainUIState.Error(error.message.orEmpty())
-                    Log.e("", "Likes:: ${error.message}")
+                    Log.e("", "Error example3:: ${error.message}")
                 }
-                // Se ejecuta en un hilo separado del hilo principal, el codigo antes de este metodo se ejecutan en un hilo seundario y el codigo despues de este metodo se ejecutan en el hilo principal
                 .flowOn(Dispatchers.IO)
                 .collect { likes ->
                     _uiState.value = MainUIState.Success(likes.toInt())
