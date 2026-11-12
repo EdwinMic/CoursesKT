@@ -1,4 +1,4 @@
-package com.example.coursekt.ui
+package com.example.coursekt.ui.states
 
 sealed class MainUIState {
 
